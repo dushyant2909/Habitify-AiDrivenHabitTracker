@@ -7,6 +7,7 @@ import morgan from "morgan";
 
 import healthCheckRoute from "./routes/healthCheckRoutes.js";
 import userRoute from "./routes/userRoutes.js";
+import habitRoute from './routes/habitRoutes.js';
 
 const morganFormat = ":method :url :status :response-time ms";
 
@@ -47,6 +48,7 @@ app.use(
 // Routes
 app.use("/api/v1/healthcheck", healthCheckRoute);
 app.use("/api/v1/user", userRoute);
+app.use('/api/v1/habit', habitRoute);
 
 app.use(errorHandler);
 
