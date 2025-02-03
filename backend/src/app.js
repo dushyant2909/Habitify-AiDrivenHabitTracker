@@ -5,6 +5,8 @@ import errorHandler from "./middlewares/errorHandler.js";
 import logger from "../logger.js";
 import morgan from "morgan";
 
+import healthCheckRoute from "./routes/healthCheckRoutes.js";
+
 const morganFormat = ":method :url :status :response-time ms";
 
 const app = express();
@@ -40,6 +42,9 @@ app.use(
         },
     })
 );
+
+// Routes
+app.use("/api/v1/healthcheck", healthCheckRoute);
 
 app.use(errorHandler);
 
