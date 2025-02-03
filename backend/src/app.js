@@ -6,6 +6,7 @@ import logger from "../logger.js";
 import morgan from "morgan";
 
 import healthCheckRoute from "./routes/healthCheckRoutes.js";
+import userRoute from "./routes/userRoutes.js";
 
 const morganFormat = ":method :url :status :response-time ms";
 
@@ -45,6 +46,7 @@ app.use(
 
 // Routes
 app.use("/api/v1/healthcheck", healthCheckRoute);
+app.use("/api/v1/user", userRoute);
 
 app.use(errorHandler);
 
