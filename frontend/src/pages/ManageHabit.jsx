@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import gifImage from "../../assets/empty_habits_page_gif.gif";
+import gifImage from "../assets/empty_habits_page_gif.gif";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import toast from "react-hot-toast";
