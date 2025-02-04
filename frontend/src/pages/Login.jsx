@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { useDispatch } from 'react-redux';
 import { login as loginUser } from "../store/slices/authSlice.js";
-const BackendUrl = import.meta.env.VITE_API_BASE_URL;
+import axiosInstance from '../utils/AxiosInstance.js';
 
 const Login = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -54,7 +53,7 @@ const Login = () => {
         e.preventDefault();
         if (validateForm()) {
             try {
-                const response = await axios.post(`${BackendUrl}/api/v1/user/login`, formData);
+                const response = await axiosInstance.post('/api/v1/user/login', formData);
                 if (response.data.success) {
                     toast.success(response.data.message);
                     dispatch(loginUser(response.data.data));

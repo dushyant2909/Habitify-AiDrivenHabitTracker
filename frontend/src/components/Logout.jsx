@@ -2,9 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { logout } from '../store/slices/authSlice.js'; // Replace with your logout action path
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import { toast } from 'react-hot-toast';
-const BackendUrl = import.meta.env.VITE_API_BASE_URL;
+import axiosInstance from '../utils/AxiosInstance.js';
 
 const Logout = () => {
     const [showConfirmation, setShowConfirmation] = useState(false);
@@ -13,7 +12,7 @@ const Logout = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await axios.get(`${BackendUrl}/api/v1/user/logout`);
+            const response = await axiosInstance.get("/api/v1/user/logout");
             if (response.data.success) {
                 toast.success(response.data.message);
                 dispatch(logout());

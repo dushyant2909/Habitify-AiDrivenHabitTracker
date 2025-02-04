@@ -2,15 +2,14 @@ import React, { useEffect, useState } from 'react';
 import gifImage from '../assets/empty_habits_page_gif.gif';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
-import axios from 'axios';
-const BackendUrl = import.meta.env.VITE_API_BASE_URL;
+import axiosInstance from '../utils/AxiosInstance';
 
 const Dashboard = () => {
     const [habits, setHabits] = useState([]);
 
     const getHabits = async () => {
         try {
-            const response = await axios.get(`${BackendUrl}/api/v1/habit`);
+            const response = await axiosInstance.get("/api/v1/habit");
             if (response.data.data.length === 0) {
                 setHabits([]);
             } else {

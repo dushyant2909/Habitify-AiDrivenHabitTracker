@@ -8,13 +8,12 @@ import NotFound from "./pages/NotFound";
 import AuthLayout from "./components/AuthLayout";
 import Layout from "./Layout.jsx";
 import { login } from "./store/slices/authSlice";
-import axios from "axios";
 import Loader from "./components/Loader";
 import Dashboard from "./pages/Dashboard";
 import AddHabit from "./pages/AddHabit";
 import ManageHabit from "./pages/ManageHabit";
 import Settings from "./pages/Settings";
-const BackendUrl = import.meta.env.VITE_API_BASE_URL;
+import axiosInstance from "./utils/AxiosInstance.js";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -24,7 +23,7 @@ const App = () => {
   useEffect(() => {
     const fetchUserProfile = async () => {
       try {
-        const userProfile = await axios.get(`${BackendUrl}/api/v1/user/profile`); // Call your API function
+        const userProfile = await axiosInstance("/api/v1/user/profile");
         if (userProfile) {
           dispatch(login(userProfile.data.data)); // Dispatch login action with the user data
         }

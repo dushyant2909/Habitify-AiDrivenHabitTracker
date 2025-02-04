@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import axios from 'axios'
 import toast from 'react-hot-toast';
-const BackendUrl = import.meta.env.VITE_API_BASE_URL;
+import axiosInstance from '../utils/AxiosInstance';
 
 const AddHabit = () => {
     const [habitData, setHabitData] = useState({
@@ -24,7 +23,7 @@ const AddHabit = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await axios.post(`${BackendUrl}/api/v1/habit`, habitData);
+            const response = await axiosInstance.post("/api/v1/habit", habitData);
             if (response.data.success) {
                 toast.success(response.data.message);
                 resetForm();

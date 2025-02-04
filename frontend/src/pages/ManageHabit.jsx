@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import gifImage from "../assets/empty_habits_page_gif.gif";
 import { Link } from "react-router-dom";
-import axios from "axios";
 import toast from "react-hot-toast";
 import Loader from "../components/Loader";
-const BackendUrl = import.meta.env.VITE_API_BASE_URL;
+import axiosInstance from "../utils/AxiosInstance";
 
 const ManageHabit = () => {
     const [habits, setHabits] = useState([]);
@@ -16,7 +15,7 @@ const ManageHabit = () => {
     const fetchHabits = async () => {
         try {
             setLoading(true);
-            const response = await axios.get(`${BackendUrl}/api/v1/habit`); // Replace with your API endpoint
+            const response = await axiosInstance.get("/api/v1/habit");
             setHabits(response.data.data);
         } catch (error) {
             console.error(error.response?.data?.message);
@@ -28,7 +27,7 @@ const ManageHabit = () => {
 
     const deleteHabit = async (id) => {
         try {
-            const response = await axios.delete(`${BackendUrl}/api/v1/habit/${id}`); // Replace with your delete endpoint
+            const response = await axiosInstance.delete(`/api/v1/habit/${id}`);
             toast.success(response.data.message || "Habit deleted successfully");
             await fetchHabits();
         } catch (error) {
@@ -39,9 +38,8 @@ const ManageHabit = () => {
 
     const handleEditSubmit = async (e) => {
         e.preventDefault();
-        console.log(formData)
         try {
-            const response = await axios.put(`${BackendUrl}/api/v1/habit`, formData);
+            const response = await axiosInstance.put("/api/v1/habit", formData);
             toast.success(response.data.message || "Habit updated successfully");
             setEditHabit(null);
             await fetchHabits();

@@ -2,8 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import toast from "react-hot-toast";
-import axios from "axios";
-const BackendUrl = import.meta.env.VITE_API_BASE_URL;
+import axiosInstance from "../utils/AxiosInstance";
 
 const Signup = () => {
     const [passwordVisible, setPasswordVisible] = useState(false);
@@ -59,7 +58,7 @@ const Signup = () => {
         e.preventDefault();
         if (validateForm()) {
             try {
-                const response = await axios.post(`${BackendUrl}/api/v1/user/signup`, formData);
+                const response = await axiosInstance.post("/api/v1/user/signup", formData);
                 if (response.data.success) {
                     toast.success(response.data.message);
                     navigate('/login');
