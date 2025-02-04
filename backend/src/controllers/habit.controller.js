@@ -79,10 +79,9 @@ const completeHabit = asyncHandler(async (req, res) => {
     return res.status(200).json(new ApiResponse(200, habit, 'Habit marked as completed for today'));
 });
 
-// Archive or delete a habit
+// Delete a habit
 const deleteHabit = asyncHandler(async (req, res) => {
     const { id } = req.params;
-
     const habit = await Habit.findOneAndDelete(
         { _id: id, user: req.user._id }
     );

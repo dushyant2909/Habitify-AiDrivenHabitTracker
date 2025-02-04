@@ -82,9 +82,9 @@ const loginUser = asyncHandler(async (req, res) => {
     // Cookie-options
     const options = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict',
-    }
+        secure: process.env.NODE_ENV === 'production', // false for local development
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // 'none' for cross-origin cookies
+    };
 
     return res.status(200)
         .cookie('accessToken', accessToken, options)

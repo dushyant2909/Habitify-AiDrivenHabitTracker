@@ -1,35 +1,60 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Route, Routes } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useEffect, useState } from "react";
+import Signup from "./pages/Signup";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import NotFound from "./pages/NotFound";
+import AuthLayout from "./components/AuthLayout";
+import Layout from "./Layout.jsx";
+import { login } from "./store/slices/authSlice";
+import Loader from "./components/Loader";
+import Dashboard from "./pages/Dashboard";
+import AddHabit from "./pages/AddHabit";
+import ManageHabit from "./pages/ManageHabit";
+import Settings from "./pages/Settings";
+import axiosInstance from "./utils/AxiosInstance.js";
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);  // Add loading state to manage fetch status
+
+  // Check for user profile on app load
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const userProfile = await axiosInstance("/api/v1/user/profile");
+        if (userProfile) {
+          dispatch(login(userProfile.data.data)); // Dispatch login action with the user data
+        }
+      } catch (error) {
+        console.log("Error fetching user profile:", error);
+      } finally {
+        setLoading(false);  // Set loading to false after profile is fetched
+      }
+    };
+
+    fetchUserProfile(); // Run the check on app load
+  }, [dispatch]);
+
+  if (loading) {
+    return <Loader />;  // Show loading state while fetching profile
+  }
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<AuthLayout authentication={false}><Home /></AuthLayout>} />
+        <Route path="signup" element={<AuthLayout authentication={false}><Signup /></AuthLayout>} />
+        <Route path="login" element={<AuthLayout authentication={false}><Login /></AuthLayout>} />
+        <Route path="dashboard" element={<AuthLayout><Dashboard /></AuthLayout>} />
+        <Route path="add-habit" element={<AuthLayout><AddHabit /></AuthLayout>} />
+        <Route path="manage-habits" element={<AuthLayout><ManageHabit /></AuthLayout>} />
+        <Route path="settings" element={<AuthLayout><Settings /></AuthLayout>} />
+        <Route path="*" element={<NotFound />} />
+      </Route>
+    </Routes >
+  );
+};
 
-export default App
+export default App;

@@ -1,3 +1,5 @@
+import dotenv from 'dotenv'
+dotenv.config()
 import express from 'express'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
@@ -13,7 +15,6 @@ import aiRoutes from './routes/aiFeaturesRoutes.js';
 const morganFormat = ":method :url :status :response-time ms";
 
 const app = express();
-
 app.use(cors({
     origin: process.env.CORS_ORIGIN,
     credentials: true,
