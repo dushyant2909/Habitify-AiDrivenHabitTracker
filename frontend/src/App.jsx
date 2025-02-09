@@ -14,6 +14,7 @@ import AddHabit from "./pages/AddHabit";
 import ManageHabit from "./pages/ManageHabit";
 import Settings from "./pages/Settings";
 import axiosInstance from "./utils/AxiosInstance.js";
+import AiFunctionality from "./pages/AiFunctionality.jsx";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -51,6 +52,7 @@ const App = () => {
         <Route path="add-habit" element={<AuthLayout><AddHabit /></AuthLayout>} />
         <Route path="manage-habits" element={<AuthLayout><ManageHabit /></AuthLayout>} />
         <Route path="settings" element={<AuthLayout><Settings /></AuthLayout>} />
+        <Route path="ai-features" element={<AuthLayout><AiFunctionality /></AuthLayout>} />
         <Route path="*" element={<NotFound />} />
       </Route>
     </Routes >

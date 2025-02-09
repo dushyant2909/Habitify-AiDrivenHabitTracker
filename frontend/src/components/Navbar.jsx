@@ -8,6 +8,7 @@ const authRoutes = [
     { name: 'Dashboard', slug: "/dashboard" },
     { name: "Add Habit", slug: "/add-habit" },
     { name: "Manage Habits", slug: "/manage-habits" },
+    { name: "Ai-Features", slug: "/ai-features" },
     { name: "Settings", slug: "/settings" },
 ];
 

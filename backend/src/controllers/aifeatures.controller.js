@@ -14,7 +14,7 @@ const suggestHabit = asyncHandler(async (req, res) => {
     if (category)
         promt = `Based on the ${category} category, suggest a good habit to follow along with a short description telling what to do and how. Only respond with the habit in the following JSON format: {"title": "habit title", "description": "habit description"}. Do not include any other text or explanation.`
     else
-        promt = `Suggest a good habit to follow along with a short description to achieve ${goal} goal, . Only respond with the habit in the following JSON format: {"title": "habit title", "description": "habit description"}. Do not include any other text or explanation.`
+        promt = `Suggest a good habit to follow, along with a short description to achieve ${goal} goal. Only respond with the habit in the following JSON format: {"title": "habit title", "description": "habit description"}. Do not include any other text or explanation.`
 
     // Define a prompt for AI
     const options = {
